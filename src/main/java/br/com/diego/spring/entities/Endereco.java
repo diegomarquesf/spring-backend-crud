@@ -1,5 +1,7 @@
 package br.com.diego.spring.entities;
 
+import java.io.Serializable;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -8,11 +10,14 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import br.com.diego.spring.entities.enums.Estado;
 
 @Entity
 @Table(name = "tb_endereco")//NOME DA TABELA NO BANCO
-public class Endereco {
+public class Endereco implements Serializable{
+	private static final long serialVersionUID = 1L;
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY) //GERAR ID AUTOMATICO
@@ -27,6 +32,7 @@ public class Endereco {
 	
 	private Integer estadoEnum; //ATRIBUTO TRANSFORMADO EM INTEIRO PARA PEGAR O ID DO ENUM
 	
+	@JsonIgnore
 	@ManyToOne //RELACIONAMENTO UMA PESSOA PARA VARIOS ENDEREÇOS
 	@JoinColumn(name = "pessoa_id") // NOME DA CHAVE ESTRANGEIRA
 	private Pessoa pessoa;
