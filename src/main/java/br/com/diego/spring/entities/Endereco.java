@@ -18,7 +18,7 @@ import br.com.diego.spring.entities.enums.Estado;
 @Table(name = "tb_endereco")//NOME DA TABELA NO BANCO
 public class Endereco implements Serializable{
 	private static final long serialVersionUID = 1L;
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY) //GERAR ID AUTOMATICO
 	private Long id;
@@ -32,7 +32,7 @@ public class Endereco implements Serializable{
 	
 	private Integer estadoEnum; //ATRIBUTO TRANSFORMADO EM INTEIRO PARA PEGAR O ID DO ENUM
 	
-	@JsonIgnore
+	@JsonIgnore //IGNORAR SERIALIZAÇÃO DO ATRIBUTO
 	@ManyToOne //RELACIONAMENTO UMA PESSOA PARA VARIOS ENDEREÇOS
 	@JoinColumn(name = "pessoa_id") // NOME DA CHAVE ESTRANGEIRA
 	private Pessoa pessoa;
@@ -42,6 +42,7 @@ public class Endereco implements Serializable{
 
 	public Endereco(Long id, String address, Integer number, String complement, String district, String city,
 			String zipCode, Estado estadoEnum, Pessoa pessoa) {
+		super();
 		this.id = id;
 		this.address = address;
 		this.number = number;

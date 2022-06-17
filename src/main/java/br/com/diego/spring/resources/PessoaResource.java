@@ -23,28 +23,23 @@ public class PessoaResource {
 	
 	@Autowired
 	private PessoaService pessoaService;
-	
+		
+	//BUSCAR TODOS
 	@RequestMapping(method=RequestMethod.GET)
 	public ResponseEntity<List<PessoaDTO>> findAll(){
 		List<PessoaDTO> listAll = pessoaService.findAll();
 		return ResponseEntity.ok(listAll);
 	}
 	
-	
+	//BUSCAR POR ID
 	@RequestMapping(value="/{id}", method=RequestMethod.GET)
-	public ResponseEntity<PessoaDTO> findById(@PathVariable Long id){
-		PessoaDTO pessoaDTO = pessoaService.findById(id);
-		
-		return ResponseEntity.ok().body(pessoaDTO);
-	}
-	
-	/*@RequestMapping(value="/{id}", method=RequestMethod.GET)
 	public ResponseEntity<Pessoa> findById(@PathVariable Long id){
 		Pessoa pessoa = pessoaService.findById(id);
 		
 		return ResponseEntity.ok().body(pessoa);
-	}*/
+	}
 	
+	//INSERIR 
 	@RequestMapping(method = RequestMethod.POST)
 	public ResponseEntity<Pessoa> insert(@RequestBody PessoaInsertDTO insertDTO){
 		Pessoa pessoa = pessoaService.fromDTO(insertDTO);
@@ -55,6 +50,9 @@ public class PessoaResource {
 		return ResponseEntity.created(uri).build();
 	}
 	
+	//ATUALIZAR 
 	
+	
+	//DELETAR 
 
 }

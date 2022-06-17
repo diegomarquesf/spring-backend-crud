@@ -24,8 +24,6 @@ public class PessoaService {
 	@Autowired
 	private EnderecoRepository enderecoRepository;
 	
-	
-	
 	//LISTAR TUDO
 	public List<PessoaDTO> findAll(){
 		List<Pessoa> list = pessoaRepository.findAll();
@@ -33,20 +31,13 @@ public class PessoaService {
 		return listDTO;
 	}
 	
-	/*
-	public Pessoa findById (Long id) {
-		Optional<Pessoa> pessoa = pessoaRepository.findById(id);
-		return pessoa.orElseThrow(() -> new ObjectNotFoundException("Objeto não encontrado, ID:" + id , null));
-	}*/
-	
 	//LISTAR POR ID
-	public PessoaDTO findById(Long id){
-			Pessoa pessoa = pessoaRepository.findById(id).get();
-			PessoaDTO pessoaDTO = new PessoaDTO(pessoa);
-			return pessoaDTO;
+	public Pessoa findById (Long id) {
+		Pessoa pessoa = pessoaRepository.findById(id).get(); 
+		return pessoa;
 	}
 	
-	
+	//INSERÇÃO DOS DADOS
 	@Transactional
 	public Pessoa insert (Pessoa pessoa) {
 		pessoa = pessoaRepository.save(pessoa);
@@ -54,6 +45,7 @@ public class PessoaService {
 		return pessoa;
 	}
 	
+	//INSTANCIANDO CLIENTE E ENDEREÇO PARA O DTO DE CLIENTENEWDTO
 	public Pessoa fromDTO(PessoaInsertDTO insertDTO) {
 		Pessoa pessoa = new Pessoa(null, insertDTO.getName(), insertDTO.getPassword(), insertDTO.getCpf(), insertDTO.getRg(), insertDTO.getBirthday(), insertDTO.getEmail(), insertDTO.getCellphone(), insertDTO.getCellphone2());
 		Endereco endereco = new Endereco(null, insertDTO.getAddress(), insertDTO.getNumber(), insertDTO.getComplement(), insertDTO.getDistrict(), insertDTO.getCity(), insertDTO.getZipCode(), Estado.valueOf(insertDTO.getEstadoEnum()),pessoa);
@@ -62,5 +54,13 @@ public class PessoaService {
 		return pessoa;
 		
 	}
+
+	/*//LISTAR POR ID
+	public Pessoa findById (Long id) {
+		Optional<Pessoa> pessoa = pessoaRepository.findById(id);
+		return pessoa.orElseThrow(() -> new ObjectNotFoundException("Objeto não encontrado, ID:" + id , null));
+	}*/
+	
+	
 }
 

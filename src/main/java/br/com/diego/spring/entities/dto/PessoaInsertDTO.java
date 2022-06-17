@@ -5,7 +5,7 @@ import java.time.LocalDate;
 
 import lombok.Data;
 
-@Data
+@Data //LOMBOOK - GETS/SETS
 public class PessoaInsertDTO implements Serializable{
 	private static final long serialVersionUID = 1L; 
 	
