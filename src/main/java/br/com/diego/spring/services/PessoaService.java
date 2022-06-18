@@ -6,6 +6,7 @@ import java.util.stream.Collectors;
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import br.com.diego.spring.entities.Endereco;
@@ -23,6 +24,8 @@ public class PessoaService {
 	private PessoaRepository pessoaRepository;
 	@Autowired
 	private EnderecoRepository enderecoRepository;
+	@Autowired
+	private BCryptPasswordEncoder encoder;
 	
 	//LISTAR TUDO
 	public List<PessoaDTO> findAll(){
@@ -47,7 +50,7 @@ public class PessoaService {
 	
 	//INSTANCIANDO CLIENTE E ENDEREÇO PARA O DTO DE CLIENTENEWDTO
 	public Pessoa fromDTO(PessoaInsertDTO insertDTO) {
-		Pessoa pessoa = new Pessoa(null, insertDTO.getName(), insertDTO.getPassword(), insertDTO.getCpf(), insertDTO.getRg(), insertDTO.getBirthday(), insertDTO.getEmail(), insertDTO.getCellphone(), insertDTO.getCellphone2());
+		Pessoa pessoa = new Pessoa(null, insertDTO.getName(), encoder.encode(insertDTO.getPassword()), insertDTO.getCpf(), insertDTO.getRg(), insertDTO.getBirthday(), insertDTO.getEmail(), insertDTO.getCellphone(), insertDTO.getCellphone2());
 		Endereco endereco = new Endereco(null, insertDTO.getAddress(), insertDTO.getNumber(), insertDTO.getComplement(), insertDTO.getDistrict(), insertDTO.getCity(), insertDTO.getZipCode(), Estado.valueOf(insertDTO.getEstadoEnum()),pessoa);
 		pessoa.getListEndereco().add(endereco);
 		
