@@ -1,6 +1,7 @@
 package br.com.diego.spring.services;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import javax.transaction.Transactional;
@@ -16,6 +17,7 @@ import br.com.diego.spring.entities.dto.PessoaInsertDTO;
 import br.com.diego.spring.entities.enums.Estado;
 import br.com.diego.spring.repositories.EnderecoRepository;
 import br.com.diego.spring.repositories.PessoaRepository;
+import br.com.diego.spring.services.exception.ObjectNotFoundException;
 
 @Service
 public class PessoaService {
@@ -36,9 +38,10 @@ public class PessoaService {
 	
 	//LISTAR POR ID
 	public Pessoa findById (Long id) {
-		Pessoa pessoa = pessoaRepository.findById(id).get(); 
-		return pessoa;
+		Optional<Pessoa> pessoa = pessoaRepository.findById(id);
+		return pessoa.orElseThrow(() -> new ObjectNotFoundException("O id "+id+ " não foi encontrado!"));
 	}
+	
 	
 	//INSERÇÃO DOS DADOS
 	@Transactional
@@ -59,9 +62,9 @@ public class PessoaService {
 	}
 
 	/*//LISTAR POR ID
-	public Pessoa findById (Long id) {
-		Optional<Pessoa> pessoa = pessoaRepository.findById(id);
-		return pessoa.orElseThrow(() -> new ObjectNotFoundException("Objeto não encontrado, ID:" + id , null));
+		/*public Pessoa findById (Long id) {
+		Pessoa pessoa = pessoaRepository.findById(id).get(); 
+		return pessoa;
 	}*/
 	
 	

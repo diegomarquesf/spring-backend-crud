@@ -3,6 +3,8 @@ package br.com.diego.spring.resources;
 import java.net.URI;
 import java.util.List;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -41,7 +43,7 @@ public class PessoaResource {
 	
 	//INSERIR 
 	@RequestMapping(method = RequestMethod.POST)
-	public ResponseEntity<Pessoa> insert(@RequestBody PessoaInsertDTO insertDTO){
+	public ResponseEntity<Pessoa> insert(@Valid @RequestBody PessoaInsertDTO insertDTO){
 		Pessoa pessoa = pessoaService.fromDTO(insertDTO);
 		pessoa = pessoaService.insert(pessoa);
 		
