@@ -37,7 +37,6 @@ public class PessoaResource {
 	@RequestMapping(value="/{id}", method=RequestMethod.GET)
 	public ResponseEntity<Pessoa> findById(@PathVariable Long id){
 		Pessoa pessoa = pessoaService.findById(id);
-		
 		return ResponseEntity.ok().body(pessoa);
 	}
 	
@@ -53,7 +52,13 @@ public class PessoaResource {
 	}
 	
 	//ATUALIZAR 
-	
+	@RequestMapping(value="/{id}", method=RequestMethod.PUT)
+	public ResponseEntity<Void> update(@Valid @RequestBody PessoaDTO pessoaDTO, @PathVariable Long id){
+		Pessoa pessoa = pessoaService.fromDTO(pessoaDTO);
+		pessoa.setId(id);
+		pessoa = pessoaService.update(pessoa);
+		return ResponseEntity.noContent().build();
+	}
 	
 	//DELETAR 
 

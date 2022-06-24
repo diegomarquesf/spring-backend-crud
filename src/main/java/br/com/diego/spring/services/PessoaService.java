@@ -1,4 +1,4 @@
-package br.com.diego.spring.services;
+    package br.com.diego.spring.services;
 
 import java.util.List;
 import java.util.Optional;
@@ -36,12 +36,11 @@ public class PessoaService {
 		return listDTO;
 	}
 	
-	//LISTAR POR ID
+	//LISTAR PESSOA POR ID
 	public Pessoa findById (Long id) {
 		Optional<Pessoa> pessoa = pessoaRepository.findById(id);
 		return pessoa.orElseThrow(() -> new ObjectNotFoundException("O id "+id+ " não foi encontrado!"));
 	}
-	
 	
 	//INSERÇÃO DOS DADOS
 	@Transactional
@@ -51,13 +50,39 @@ public class PessoaService {
 		return pessoa;
 	}
 	
+	//ALTERAÇÃO DOS DADOS
+	public Pessoa update(Pessoa pessoa) {
+		Pessoa newPessoa = findById(pessoa.getId());
+		updateData(newPessoa, pessoa);
+		return pessoaRepository.save(newPessoa);
+	}
+	
+	private void updateData(Pessoa newPessoa, Pessoa pessoa) {
+		newPessoa.setName(pessoa.getName());
+		newPessoa.setCpf(pessoa.getCpf());
+		newPessoa.setRg(pessoa.getRg());
+		newPessoa.setBirthday(pessoa.getBirthday()); 
+		newPessoa.setEmail(pessoa.getEmail());
+		newPessoa.setCellphone(pessoa.getCellphone());
+		newPessoa.setCellphone2(pessoa.getCellphone2());
+		newPessoa.setListEndereco(pessoa.getListEndereco());
+	}
+	
+	
+	//EXCLUIR DADOS
+	
+	
+	public Pessoa fromDTO(PessoaDTO pessoaDTO) {
+		return new Pessoa(pessoaDTO.getIdPessoa(), pessoaDTO.getName(), null, pessoaDTO.getCpf(), pessoaDTO.getRg(), pessoaDTO.getBirthday(), pessoaDTO.getEmail(), pessoaDTO.getCellphone(), pessoaDTO.getCellphone2());
+	}
+	
 	//INSTANCIANDO CLIENTE E ENDEREÇO PARA O DTO DE CLIENTENEWDTO
 	public Pessoa fromDTO(PessoaInsertDTO insertDTO) {
 		Pessoa pessoa = new Pessoa(null, insertDTO.getName(), encoder.encode(insertDTO.getPassword()), insertDTO.getCpf(), insertDTO.getRg(), insertDTO.getBirthday(), insertDTO.getEmail(), insertDTO.getCellphone(), insertDTO.getCellphone2());
 		Endereco endereco = new Endereco(null, insertDTO.getAddress(), insertDTO.getNumber(), insertDTO.getComplement(), insertDTO.getDistrict(), insertDTO.getCity(), insertDTO.getZipCode(), Estado.valueOf(insertDTO.getEstadoEnum()),pessoa);
 		pessoa.getListEndereco().add(endereco);
 		
-		return pessoa;
+		return pessoa; 
 		
 	}
 

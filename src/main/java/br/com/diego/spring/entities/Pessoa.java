@@ -30,7 +30,10 @@ public class Pessoa implements Serializable{
 	private String password;
 	private String cpf;
 	private String rg;
+
+
 	private LocalDate birthday;
+	
 	@Column(unique=true)
 	private String email;
 	private String cellphone;
