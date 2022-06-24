@@ -1,4 +1,4 @@
-    package br.com.diego.spring.services;
+     package br.com.diego.spring.services;
 
 import java.util.List;
 import java.util.Optional;
@@ -17,6 +17,7 @@ import br.com.diego.spring.entities.dto.PessoaInsertDTO;
 import br.com.diego.spring.entities.enums.Estado;
 import br.com.diego.spring.repositories.EnderecoRepository;
 import br.com.diego.spring.repositories.PessoaRepository;
+import br.com.diego.spring.services.exception.DataIntegrityViolationException;
 import br.com.diego.spring.services.exception.ObjectNotFoundException;
 
 @Service
@@ -50,6 +51,7 @@ public class PessoaService {
 		return pessoa;
 	}
 	
+
 	//ALTERAÇÃO DOS DADOS
 	public Pessoa update(Pessoa pessoa) {
 		Pessoa newPessoa = findById(pessoa.getId());
@@ -70,10 +72,18 @@ public class PessoaService {
 	
 	
 	//EXCLUIR DADOS
+	public void delete(Long id) {
+		findById(id);
+		try {
+			pessoaRepository.deleteById(id);
+		}catch(DataIntegrityViolationException e){
+			throw new DataIntegrityViolationException("Não é possivel Excluir");
+		}
+	}
 	
 	
 	public Pessoa fromDTO(PessoaDTO pessoaDTO) {
-		return new Pessoa(pessoaDTO.getIdPessoa(), pessoaDTO.getName(), null, pessoaDTO.getCpf(), pessoaDTO.getRg(), pessoaDTO.getBirthday(), pessoaDTO.getEmail(), pessoaDTO.getCellphone(), pessoaDTO.getCellphone2());
+		return new Pessoa(pessoaDTO.getId(), pessoaDTO.getName(), null, pessoaDTO.getCpf(), pessoaDTO.getRg(), pessoaDTO.getBirthday(), pessoaDTO.getEmail(), pessoaDTO.getCellphone(), pessoaDTO.getCellphone2());
 	}
 	
 	//INSTANCIANDO CLIENTE E ENDEREÇO PARA O DTO DE CLIENTENEWDTO
@@ -82,16 +92,8 @@ public class PessoaService {
 		Endereco endereco = new Endereco(null, insertDTO.getAddress(), insertDTO.getNumber(), insertDTO.getComplement(), insertDTO.getDistrict(), insertDTO.getCity(), insertDTO.getZipCode(), Estado.valueOf(insertDTO.getEstadoEnum()),pessoa);
 		pessoa.getListEndereco().add(endereco);
 		
-		return pessoa; 
-		
+		return pessoa; 	
 	}
 
-	/*//LISTAR POR ID
-		/*public Pessoa findById (Long id) {
-		Pessoa pessoa = pessoaRepository.findById(id).get(); 
-		return pessoa;
-	}*/
-	
-	
 }
 

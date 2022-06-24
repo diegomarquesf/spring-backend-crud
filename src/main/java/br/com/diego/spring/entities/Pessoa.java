@@ -59,6 +59,7 @@ public class Pessoa implements Serializable{
 		this.cellphone2 = cellphone2;
 	}
 
+
 	
 
 	

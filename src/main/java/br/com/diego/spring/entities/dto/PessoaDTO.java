@@ -18,7 +18,7 @@ import lombok.Data;
 public class PessoaDTO implements Serializable{
 	private static final long serialVersionUID = 1L; 
 	
-	private Long idPessoa;
+	private Long id;
 	
 	@NotEmpty(message = "Preenchimento obrigatório")
 	@Length(min = 3, max = 120, message = "O tamanho deve ser entre 3 e 120 caracteres")
@@ -48,14 +48,14 @@ public class PessoaDTO implements Serializable{
 	}
 	
 	public PessoaDTO(Pessoa pessoa) {
-		idPessoa = pessoa.getId();
+		id = pessoa.getId();
 		name = pessoa.getName();
 		cpf = pessoa.getCpf();
 		rg = pessoa.getRg();
 		email = pessoa.getEmail();
 		birthday = pessoa.getBirthday();
 		cellphone = pessoa.getCellphone();
-		cellphone2 = pessoa.getCellphone2();		
+		cellphone2 = pessoa.getCellphone2();
 	}
 
 

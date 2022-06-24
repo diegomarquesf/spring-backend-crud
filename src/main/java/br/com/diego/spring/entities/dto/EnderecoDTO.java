@@ -12,9 +12,9 @@ import lombok.Data;
 @Data //LOMBOOK - GETS/SETS
 public class EnderecoDTO implements Serializable{
 	private static final long serialVersionUID = 1L; 
-	
-	//ATRIBUTOS DE ENDEREÇO
-		private Long idEndereco;
+
+		//ATRIBUTOS DE ENDEREÇO
+		private Long id;
 		
 		@NotEmpty(message = "Preenchimento obrigatório")
 		private String address;
@@ -42,13 +42,14 @@ public class EnderecoDTO implements Serializable{
 	}
 	
 	public EnderecoDTO(Endereco endereco) {
-		idEndereco = endereco.getId();
+		id = endereco.getId();	
 		address = endereco.getAddress();
 		number = endereco.getNumber();
 		complement = endereco.getComplement();
 		district = endereco.getDistrict();
 		city = endereco.getCity();
 		zipCode = endereco.getZipCode(); 
+		estadoEnum = endereco.getEstadoEnum().getCod();
 	}
 
 

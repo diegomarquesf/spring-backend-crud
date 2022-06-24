@@ -57,9 +57,16 @@ public class PessoaResource {
 		Pessoa pessoa = pessoaService.fromDTO(pessoaDTO);
 		pessoa.setId(id);
 		pessoa = pessoaService.update(pessoa);
+		
 		return ResponseEntity.noContent().build();
 	}
 	
 	//DELETAR 
 
+	@RequestMapping(value="/{id}", method=RequestMethod.DELETE)
+	public ResponseEntity<Void> delete(@PathVariable Long id) {
+		pessoaService.delete(id);
+		
+		return ResponseEntity.noContent().build();
+	}
 }
